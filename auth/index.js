@@ -10,9 +10,6 @@ function getToken(auth,role){
     if(!auth){
         throw error("Error in Credentials",403);
     }
-    console.log({
-        role
-    })
     if(auth.indexOf(role) === -1){
         throw error('user is not available',401);
     }

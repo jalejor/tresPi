@@ -18,13 +18,16 @@ module.exports = function(injecteStore){
         return store.get(TABLE,id);
     }
 
+    var nowDate = new Date();
+    var expiryDate = nowDate.setHours(5);
+
     async function upsert(body){
         const ticket = {
             name: body.name,
             description : body.description,
             product_id : body.product_id,
-            valid_since : "1609864739000",
-            valid_until : "1609864739000"
+            valid_since : nowDate,
+            valid_until : expiryDate,
         }
 
         if(body.id){
