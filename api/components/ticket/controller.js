@@ -18,8 +18,8 @@ module.exports = function(injecteStore){
         return store.get(TABLE,id);
     }
 
-    var nowDate = new Date();
-    var expiryDate = nowDate.setHours(5);
+    let nowDate = new Date();
+    let expiryDate = nowDate.setHours(5);
 
     async function upsert(body){
         const ticket = {
@@ -28,6 +28,7 @@ module.exports = function(injecteStore){
             product_id : body.product_id,
             valid_since : nowDate,
             valid_until : expiryDate,
+            validated: false
         }
 
         if(body.id){
@@ -39,9 +40,15 @@ module.exports = function(injecteStore){
         return store.upsert(TABLE,ticket);
     }
 
+    async function validate(ticket){
+        ticket.validated = true;
+        return store.upsert(TABLE,ticket);
+    }
+
     return{
         list,
         get,
         upsert,
+        validate,
     }
 }
