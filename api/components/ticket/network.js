@@ -44,7 +44,6 @@ async function upsert(req,res,next){
 async function validate(req,res,next){
     try {
         const ticket = await controller.get(req.params.id)
-        
         if(!ticket){
             throw new Error('Ticket not found');
         }
@@ -54,7 +53,7 @@ async function validate(req,res,next){
 
         console.log(ticket);
 
-        if(ticket.valid_since > nowDate &&  ticket.valid_until < expiryDate){
+        if(ticket.valid_since > nowDate &&  ticket.valid_until <= expiryDate){
             ticket.validated = true;
             const ticketValidated = await controller.valdiate(ticket)
             response.success(req, res, ticketValidated, 200)    
